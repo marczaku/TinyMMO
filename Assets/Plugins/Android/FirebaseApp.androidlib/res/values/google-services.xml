@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id" xmlns:tools="http://schemas.android.com/tools">
+  <string name="gcm_defaultSenderId" translatable="false">724818870145</string>
+  <string name="google_storage_bucket" translatable="false">tiny-mmo.appspot.com</string>
+  <string name="project_id" translatable="false">tiny-mmo</string>
+  <string name="google_api_key" translatable="false">AIzaSyBaRJM3yppx2GOGNdTjhV0hQMvi-LCkyGY</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBaRJM3yppx2GOGNdTjhV0hQMvi-LCkyGY</string>
+  <string name="google_app_id" translatable="false">1:724818870145:android:a9164ae0280fbcba593280</string>
+  <string name="default_web_client_id" translatable="false">724818870145-ftg5bh27asjfu96kclcfsl6s6cqd01mf.apps.googleusercontent.com</string>
+</resources>
