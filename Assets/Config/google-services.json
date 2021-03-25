@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "724818870145",
+    "project_id": "tiny-mmo",
+    "storage_bucket": "tiny-mmo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724818870145:android:a9164ae0280fbcba593280",
+        "android_client_info": {
+          "package_name": "com.marczaku.tinymmo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724818870145-ftg5bh27asjfu96kclcfsl6s6cqd01mf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaRJM3yppx2GOGNdTjhV0hQMvi-LCkyGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724818870145-ftg5bh27asjfu96kclcfsl6s6cqd01mf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
