@@ -22,10 +22,10 @@ public class Login : MonoBehaviour {
 		var auth = FirebaseAuth.DefaultInstance;
 
 		// if the user is authenticated already, just use that sign-in
-		if (auth.CurrentUser != null) {
-			OnSignInSuccessful();
-			yield break;
-		}
+		// if (auth.CurrentUser != null) {
+		// 	OnSignInSuccessful();
+		// 	yield break;
+		// }
 		
 		var userTask = auth.SignInAnonymouslyAsync();
 		while (!userTask.IsCompleted) {

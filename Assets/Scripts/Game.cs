@@ -2,8 +2,10 @@ using Firebase.Auth;
 using UnityEngine;
 
 public class Game : MonoBehaviour {
+	public Player player;
 	void Start() {
 		var user = FirebaseAuth.DefaultInstance.CurrentUser;
-		Debug.Log(user.UserId);
+		this.player.PlayerId = user.UserId;
+		this.player.IsAuthenticated = true;
 	}
 }
