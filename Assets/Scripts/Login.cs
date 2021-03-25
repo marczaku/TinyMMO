@@ -23,7 +23,7 @@ public class Login : MonoBehaviour {
 
 		// if the user is authenticated already, just use that sign-in
 		if (auth.CurrentUser != null) {
-			OnSignInSuccessful(auth.CurrentUser);
+			OnSignInSuccessful();
 			yield break;
 		}
 		
@@ -37,14 +37,10 @@ public class Login : MonoBehaviour {
 			yield break;
 		}
 
-		var user = userTask.Result;
-		OnSignInSuccessful(user);
+		OnSignInSuccessful();
 	}
 
-	void OnSignInSuccessful(FirebaseUser user) {
-		Debug.Log(Application.persistentDataPath);
-		Debug.Log(user.UserId);
+	void OnSignInSuccessful() {
 		SceneManager.LoadScene("Game");
-		//FindObjectOfType<Game>().SignIn(user);
 	}
 }
