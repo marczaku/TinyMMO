@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Threading.Tasks;
 using Firebase.Database;
 using UnityEngine;
 
@@ -14,28 +12,27 @@ public class Player : MonoBehaviour {
 
     void LoadDatabaseValue() {
         var reference = FirebaseDatabase.DefaultInstance.GetReference(this.PlayerId);
+        // listen to database changes and update
         reference.ValueChanged  += OnDatabaseChange;
     }
 
     void OnDatabaseChange(object sender, ValueChangedEventArgs e) {
-        // else, we deserialize the value from the database
+        // set the view value when the value has changed in the database
         var positionJson = (string) e.Snapshot.Value;
         this.transform.position = JsonUtility.FromJson<Vector2>(positionJson);
     }
-    
-    
-    // ValueChanged: 2 -> set view
-    // Property: if(2!=0) Database.Set(2)
-    // ValueChanged: 2 -> SetProperty 2
-    // Property: if(2!=2) return;
 
     Vector2 Position {
         get => this.transform.position;
         set {
-            Debug.Log("Set Database value to: "+value);
+            // do not update the value, if it hasn't changed
             if ((Vector2) this.transform.position == value)
                 return;
+            
+            // update the view (for more responsiveness)
             this.transform.position = value;
+            
+            // and the database value (for persistence)
             SetDatabaseValue(value);
         }
     }
