@@ -9,17 +9,24 @@ public class Player : MonoBehaviour {
     public bool IsAuthenticated { get; set; }
 
     public async void Load() {
+        // Load the value from database on game start
+        // and Cache it, so we do not have to read it every frame
         await LoadDatabaseValue();
     }
 
     async Task LoadDatabaseValue() {
+        // this is how we define, which value we want to access in the database
         var reference = FirebaseDatabase.DefaultInstance.GetReference(this.PlayerId);
+        // we wait for the asynchronous call to the database to complete
         var value = await reference.GetValueAsync();
+        
+        // if there is no value yet, we just start at zero
         if (!value.Exists) {
             this.Position = Vector2.zero;
             return;
         }
 
+        // else, we deserialize the value from the database
         var positionJson = (string) value.Value;
         this.Position = JsonUtility.FromJson<Vector2>(positionJson);
     }
@@ -33,8 +40,12 @@ public class Player : MonoBehaviour {
     }
 
     void SetDatabaseValue(Vector2 value) {
+        // this is how we define, which value we want to access in the database
         var reference = FirebaseDatabase.DefaultInstance.GetReference(this.PlayerId);
+        // we serialize the value
         var positionJson = JsonUtility.ToJson(value);
+        // and update it in the database
+        // note: we do not have to await here, because we do not depend on the value to be set before continuing execution
         reference.SetValueAsync(positionJson);
     }
 
