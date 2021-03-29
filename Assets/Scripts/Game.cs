@@ -7,5 +7,6 @@ public class Game : MonoBehaviour {
 		var user = FirebaseAuth.DefaultInstance.CurrentUser;
 		this.player.PlayerId = user.UserId;
 		this.player.IsAuthenticated = true;
+		this.player.Load();
 	}
 }

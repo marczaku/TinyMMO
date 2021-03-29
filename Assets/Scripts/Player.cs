@@ -1,23 +1,44 @@
+using System.Collections;
+using System.Threading.Tasks;
+using Firebase.Database;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
 
     public string PlayerId { get; set; }
     public bool IsAuthenticated { get; set; }
-    
-    Vector2 Position {
-        get {
-            const string defaultPositionJson = "{\"x\":0,\"y\":0}";
-            var positionJson = PlayerPrefs.GetString(this.PlayerId, defaultPositionJson);
-            return JsonUtility.FromJson<Vector2>(positionJson);
+
+    public async void Load() {
+        await LoadDatabaseValue();
+    }
+
+    async Task LoadDatabaseValue() {
+        var reference = FirebaseDatabase.DefaultInstance.GetReference(this.PlayerId);
+        var value = await reference.GetValueAsync();
+        if (!value.Exists) {
+            this.Position = Vector2.zero;
+            return;
         }
+
+        var positionJson = (string) value.Value;
+        this.Position = JsonUtility.FromJson<Vector2>(positionJson);
+    }
+
+    Vector2 Position {
+        get => this.transform.position;
         set {
-            var positionJson = JsonUtility.ToJson(value);
-            PlayerPrefs.SetString(this.PlayerId, positionJson);
+            this.transform.position = value;
+            SetDatabaseValue(value);
         }
     }
+
+    void SetDatabaseValue(Vector2 value) {
+        var reference = FirebaseDatabase.DefaultInstance.GetReference(this.PlayerId);
+        var positionJson = JsonUtility.ToJson(value);
+        reference.SetValueAsync(positionJson);
+    }
+
     void Update() {
-        this.transform.position = this.Position;
         if (this.IsAuthenticated) {
             if (Input.GetKey(KeyCode.D)) {
                 this.Position += new Vector2(0.1f, 0f);

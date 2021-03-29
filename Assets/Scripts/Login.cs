@@ -21,6 +21,10 @@ public class Login : MonoBehaviour {
 		
 		var auth = FirebaseAuth.DefaultInstance;
 
+		// This is commented out for now, so we can use the Login Screen
+		// Kind of like a LogOut-Screen, because we always get a new User
+		// When starting from the Login-Screen:
+		
 		// if the user is authenticated already, just use that sign-in
 		// if (auth.CurrentUser != null) {
 		// 	OnSignInSuccessful();
