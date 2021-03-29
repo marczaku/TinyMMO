@@ -8,32 +8,33 @@ public class Player : MonoBehaviour {
     public string PlayerId { get; set; }
     public bool IsAuthenticated { get; set; }
 
-    public async void Load() {
-        // Load the value from database on game start
-        // and Cache it, so we do not have to read it every frame
-        await LoadDatabaseValue();
+    public void Load() {
+        LoadDatabaseValue();
     }
 
-    async Task LoadDatabaseValue() {
-        // this is how we define, which value we want to access in the database
+    void LoadDatabaseValue() {
         var reference = FirebaseDatabase.DefaultInstance.GetReference(this.PlayerId);
-        // we wait for the asynchronous call to the database to complete
-        var value = await reference.GetValueAsync();
-        
-        // if there is no value yet, we just start at zero
-        if (!value.Exists) {
-            this.Position = Vector2.zero;
-            return;
-        }
-
-        // else, we deserialize the value from the database
-        var positionJson = (string) value.Value;
-        this.Position = JsonUtility.FromJson<Vector2>(positionJson);
+        reference.ValueChanged  += OnDatabaseChange;
     }
+
+    void OnDatabaseChange(object sender, ValueChangedEventArgs e) {
+        // else, we deserialize the value from the database
+        var positionJson = (string) e.Snapshot.Value;
+        this.transform.position = JsonUtility.FromJson<Vector2>(positionJson);
+    }
+    
+    
+    // ValueChanged: 2 -> set view
+    // Property: if(2!=0) Database.Set(2)
+    // ValueChanged: 2 -> SetProperty 2
+    // Property: if(2!=2) return;
 
     Vector2 Position {
         get => this.transform.position;
         set {
+            Debug.Log("Set Database value to: "+value);
+            if ((Vector2) this.transform.position == value)
+                return;
             this.transform.position = value;
             SetDatabaseValue(value);
         }
