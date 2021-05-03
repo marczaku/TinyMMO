@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     }
 
     void LoadDatabaseValue() {
+        // this is how we define, which value we want to access in the database
         var reference = FirebaseDatabase.DefaultInstance.GetReference(this.PlayerId);
         // listen to database changes and update
         reference.ValueChanged  += OnDatabaseChange;
@@ -26,7 +27,7 @@ public class Player : MonoBehaviour {
         get => this.transform.position;
         set {
             // do not update the value, if it hasn't changed
-            if ((Vector2) this.transform.position == value)
+            if (Vector2.Distance(this.transform.position, value) > Vector2.kEpsilon)
                 return;
             
             // update the view (for more responsiveness)
